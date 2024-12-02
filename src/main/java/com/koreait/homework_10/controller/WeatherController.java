@@ -15,11 +15,6 @@ public class WeatherController {
         return "weather"; // weather.html을 반환
     }
 
-    @PostMapping("/submitQuestion")
-    public String submitQuestion(@RequestParam String question, Model model) {
-        // 질문 처리 로직
-        return "redirect:/weather"; // 또는 질문이 제출된 후 보여줄 페이지로 이동
-    }
 
 
 }
