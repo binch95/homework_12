@@ -22,6 +22,10 @@
         .weather-item {
             margin-bottom: 15px;
         }
+        .time-container {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
     </style>
 </head>
 <body>
@@ -48,27 +52,42 @@
 
     <!-- Weather Results Container -->
     <div id="weather-container" class="mt-4"></div>
+
+    <!-- Time Results Container -->
+    <div id="time-container" class="time-container mt-4">
+        <p id="time"></p> <!-- 실시간 시간 표시 -->
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     const stadiums = [
-        { name: '서울', lat: 37.5122579, lon: 127.0719011 },
-        { name: '수원', lat: 37.2997553, lon: 127.0096685 },
-        { name: '고척', lat: 37.498, lon: 126.867 },
-        { name: '인천', lat: 37.4370423, lon: 126.6932617 },
-        { name: '대전', lat: 36.3170789, lon: 127.4291345 },
-        { name: '전주', lat: 35.8219, lon: 127.1489 },
-        { name: '창원', lat: 35.2225335, lon: 128.5823895 },
-        { name: '대구', lat: 35.8411705, lon: 128.6815273 },
-        { name: '광주', lat: 35.1681242, lon: 126.8891056 },
-        { name: '강원도', lat: 37.7556, lon: 128.8961 },
-        { name: '제주도', lat: 33.5097, lon: 126.5219 },
+        { name: '서울', lat: 37.5122579, lon: 127.0719011, timezone: 'Asia/Seoul' },
+        { name: '수원', lat: 37.2997553, lon: 127.0096685, timezone: 'Asia/Seoul' },
+        { name: '고척', lat: 37.498, lon: 126.867, timezone: 'Asia/Seoul' },
+        { name: '인천', lat: 37.4370423, lon: 126.6932617, timezone: 'Asia/Seoul' },
+        { name: '대전', lat: 36.3170789, lon: 127.4291345, timezone: 'Asia/Seoul' },
+        { name: '전주', lat: 35.8219, lon: 127.1489, timezone: 'Asia/Seoul' },
+        { name: '창원', lat: 35.2225335, lon: 128.5823895, timezone: 'Asia/Seoul' },
+        { name: '대구', lat: 35.8411705, lon: 128.6815273, timezone: 'Asia/Seoul' },
+        { name: '광주', lat: 35.1681242, lon: 126.8891056, timezone: 'Asia/Seoul' },
+        { name: '강원도', lat: 37.7556, lon: 128.8961, timezone: 'Asia/Seoul' },
+        { name: '제주도', lat: 33.5097, lon: 126.5219, timezone: 'Asia/Seoul' },
     ];
 
     const apiKey = '1df3f7158ca259951414f2847f3c96b9';
 
     $(document).ready(function() {
+        // 시간 업데이트 함수
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ko-KR', { hour12: false }); // 24시간 형식
+            $('#time').text(`현재 시간: ${timeString}`);
+        }
+
+        // 1초마다 시간을 갱신
+        setInterval(updateTime, 1000);
+
         $('#weather-form').submit(function(event) {
             event.preventDefault(); // 폼 제출 방지
             const selectedStadium = $("input[name='stadium']:checked").val(); // 선택된 도시 값
